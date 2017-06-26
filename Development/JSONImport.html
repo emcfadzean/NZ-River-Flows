@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+
+<html>
+
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+	
+		<title>JQuery Practice</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		
+		<script>
+			console.log("Begin");
+			
+			//Import from Local File
+			console.log("Importing JSON from local file...");
+			$.ajax({
+				url: 'test.json',
+				type: 'GET',
+				dataType: 'json',
+				success: function(data){
+					console.log("Local JSON File Imported Successfully");
+					var i = data.value.length;
+					console.log(data.value);
+					document.getElementById("localFile").innerHTML = data.value[i-1].ValueAsRecorded_m3s;
+				},
+				error: function(){
+					console.log("Error loading local JSON file");
+				}
+			});
+			
+			//Import from External URL
+			console.log("Importing JSON from External URL...");
+			$.ajax({
+				url: 'http://data.orc.govt.nz/v1/sql/TEL_RIVF',
+				type: 'GET',
+				dataType: 'jsonp',
+				success: function(data){
+					console.log("External JSON URL Imported Successfully");
+					var i = data.value.length;
+					console.log(data.responce);
+					document.getElementById("urlFile").innerHTML = data.value[i-1].ValueAsRecorded_m3s;
+				},
+				error: function(){
+					console.log("Error loading External URL JSON file");
+				}
+			});
+			
+		</script>
+	</head>
+	
+	<body>
+		<p id="localFile"></p>
+		<p id="urlFile"></p>
+	</body>
+	
+</html>
